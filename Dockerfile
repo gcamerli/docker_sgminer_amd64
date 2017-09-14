@@ -90,7 +90,6 @@ RUN autoreconf -i
 RUN CFLAGS="-02 -Wall -march=native"
 RUN ./configure --enable-opencl --prefix=/usr/bin/
 RUN make
-RUN make install
 
 # Execute sgminer
 ENTRYPOINT ["sgminer"]
