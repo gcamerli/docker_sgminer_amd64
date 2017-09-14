@@ -6,15 +6,21 @@ LABEL maintainer="gcamerli@gmail.com"
 # Update ubuntu
 RUN apt-get update
 
+# Set environment variables
+ENV TERM=xterm
+ENV DEBIAN_FRONTEND=noninteractive
+ENV RUNLEVEL=1
+
 # Install build tools
 RUN apt-get -y install \
-	build-essential \
 	apt-utils \
+	xterm \
+	dialog \
+	build-essential \
 	autoconf \
 	automake \
 	libtool \
 	git \
-	xterm \
 	libcurl4-openssl-dev \ 
 	pkg-config \
 	libncurses5-dev \
@@ -25,12 +31,12 @@ RUN apt-get -y install \
 	libgmp-dev \
 	libgl1-mesa-glx \
 	libgl1-mesa-dri \
-	lsb-release
+	lsb-release 
 
+# Clean apt lists
 RUN rm -rf /var/lib/apt/lists/*
 
 # Add name to Docker image
-
 ENV NAME=sgminer
 
 # Create sgminer dir
@@ -60,17 +66,32 @@ RUN rm AMD-APP-SDK-*.sh && rm -rf AMDAPPSDK-*
 RUN rm -rf /opt/AMDAPPSDK-*/samples/{aparapi,bolt,opencv}
 
 # Put includes and lib in the right path
-RUN ln -s /opt/AMDAPPSDK-3.0/include/CL/* /usr/include/ && ln -s /opt/AMDAPPSDK-3.0/lib/x86_64/sdk/libOpenCL.so.1 /usr/lib/libOpenCL.so
+RUN ln -s /opt/AMDAPPSDK-3.0/include/CL /usr/include/CL && ln -s /opt/AMDAPPSDK-3.0/lib/x86_64/sdk/libOpenCL.so.1 /usr/lib/libOpenCL.so
 
-# Build binary
+# Extract AMD GPU Pro
+COPY ./amdgpu-pro-17.30-*.tar.xz .
+RUN tar -xpvf amdgpu-pro-17.30-465504.tar.xz
+RUN rm amdgpu-pro-17.30-*.tar.xz
+
+# Install AMD GPU Pro
+RUN ./amdgpu-pro-17.30-*/amdgpu-pro-install
+
+# Remove AMD GPU Pro files
+RUN rm -rf amdgpu-pro-17.30-* 
+
+# Set environment variables
+ENV PATH=$PATH:/root/sgminer-gm/
+ENV DISPLAY=:0
+ENV GPU_USE_SYNC_OBJECTS=1
+ENV GPU_MAX_ALLOC_PERCENT=100
+
+# Build sgminer
 RUN autoreconf -i
 RUN CFLAGS="-02 -Wall -march=native"
 RUN ./configure --enable-opencl --prefix=/usr/bin/
-RUN automake
 RUN make
-ENV PATH=$PATH:/root/sgminer-gm/
-ENV TERM=xterm
+RUN make install
 
-# Execute binary
+# Execute sgminer
 ENTRYPOINT ["sgminer"]
 CMD ["--help"]
