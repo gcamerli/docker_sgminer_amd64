@@ -1,10 +1,7 @@
 FROM ubuntu:16.04
 USER root
 
-LABEL maintainer="gcamerli@gmail.com"
-
-# Update ubuntu
-RUN apt-get update
+LABEL maintainer="https://gcamer.li"
 
 # Set environment variables
 ENV TERM=xterm
@@ -12,26 +9,45 @@ ENV DEBIAN_FRONTEND=noninteractive
 ENV RUNLEVEL=1
 
 # Install build tools
-RUN apt-get -y install \
+RUN apt-get update
+RUN apt-get install -y \
 	apt-utils \
 	xterm \
 	dialog \
 	build-essential \
 	autoconf \
+	dh-autoreconf \
 	automake \
+	autogen \
 	libtool \
 	git \
+	screen \
+	libudev-dev \
+	xserver-xorg-core \
+	xserver-xorg-video-ati \
+	gdebi \
+	unzip \
+	execstack \
+	dh-modaliases \
+	lib32gcc1 \
+	dkms \
+	yasm \
+	curl \
+	lsb-release \ 
 	libcurl4-openssl-dev \ 
 	pkg-config \
 	libncurses5-dev \
-	ocl-icd-opencl-dev \
 	libevent-pthreads-2.0.5 \
 	libjansson-dev \
-	libssl-dev \
-	libgmp-dev \
+	ocl-icd-opencl-dev \
 	libgl1-mesa-glx \
 	libgl1-mesa-dri \
-	lsb-release 
+	opencl-headers \
+	mesa-utils \
+	libglu1-mesa \
+	xserver-xorg-video-amdgpu \
+	libssl-dev \
+	libgmp-dev
 
 # Clean apt lists
 RUN rm -rf /var/lib/apt/lists/*
@@ -74,7 +90,9 @@ RUN tar -xpvf amdgpu-pro-17.30-465504.tar.xz
 RUN rm amdgpu-pro-17.30-*.tar.xz
 
 # Install AMD GPU Pro
-RUN ./amdgpu-pro-17.30-*/amdgpu-pro-install
+WORKDIR /root/sgminer-gm/amdgpu-pro-17.30-465504/
+RUN ./amdgpu-pro-install -y
+WORKDIR /root/sgminer-gm
 
 # Remove AMD GPU Pro files
 RUN rm -rf amdgpu-pro-17.30-* 
@@ -88,7 +106,7 @@ ENV GPU_MAX_ALLOC_PERCENT=100
 # Build sgminer
 RUN autoreconf -i
 RUN CFLAGS="-02 -Wall -march=native"
-RUN ./configure --enable-opencl --prefix=/usr/bin/
+RUN ./configure
 RUN make
 
 # Execute sgminer
