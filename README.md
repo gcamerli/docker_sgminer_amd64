@@ -17,12 +17,12 @@ You must download and put inside the source tree:
 
 To automate the operations with **docker** you can use:
 
-+ [build.sh](build.sh)
-+ [test.sh](test.sh)
-+ [run.sh](run.sh)
-+ [stop.sh](stop.sh)
-+ [clean.sh](clean.sh)
-+ [remove.sh](remove.sh)
++ [build.sh](script/build.sh)
++ [test.sh](script/test.sh)
++ [run.sh](script/run.sh)
++ [stop.sh](script/stop.sh)
++ [clean.sh](script/clean.sh)
++ [remove.sh](script/remove.sh)
 
 ### **How it works**
 
