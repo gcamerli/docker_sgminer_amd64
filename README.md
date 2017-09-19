@@ -18,6 +18,7 @@ You must download and put inside the source tree:
 To automate the operations with **docker** you can use:
 
 + [build.sh](build.sh)
++ [test.sh](test.sh)
 + [run.sh](run.sh)
 + [stop.sh](stop.sh)
 + [clean.sh](clean.sh)
