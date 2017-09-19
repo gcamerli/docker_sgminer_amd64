@@ -23,6 +23,12 @@ To automate the operations with **docker** you can use:
 + [clean.sh](clean.sh)
 + [remove.sh](remove.sh)
 
+### **How it works**
+
+![sgminer_container](img/docker_sgminer.png)
+
+This scheme describes how the docker **container** is assembled to use **AMD GPU**s.
+
 ### **GPL License**
 
 This work is licensed under the terms of **[GNU General Public License v3.0](https://www.gnu.org/licenses/gpl.html)**.
