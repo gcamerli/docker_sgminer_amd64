@@ -82,7 +82,8 @@ RUN rm AMD-APP-SDK-*.sh && rm -rf AMDAPPSDK-*
 RUN rm -rf /opt/AMDAPPSDK-*/samples/{aparapi,bolt,opencv}
 
 # Put includes and lib in the right path
-RUN ln -s /opt/AMDAPPSDK-3.0/include/CL /usr/include/CL && ln -s /opt/AMDAPPSDK-3.0/lib/x86_64/sdk/libOpenCL.so.1 /usr/lib/libOpenCL.so
+RUN ln -s /opt/AMDAPPSDK-3.0/include/CL /usr/include/CL && \ 
+	ln -s /opt/AMDAPPSDK-3.0/lib/x86_64/sdk/libOpenCL.so.1 /usr/lib/libOpenCL.so
 
 # Extract AMD GPU Pro
 COPY ./amdgpu-pro-17.30-*.tar.xz .
@@ -91,7 +92,7 @@ RUN rm amdgpu-pro-17.30-*.tar.xz
 
 # Install AMD GPU Pro
 WORKDIR /root/sgminer-gm/amdgpu-pro-17.30-465504/
-RUN ./amdgpu-pro-install -y
+#RUN ./amdgpu-pro-install -y
 WORKDIR /root/sgminer-gm
 
 # Remove AMD GPU Pro files
