@@ -20,6 +20,8 @@ To automate the operations with **docker** you can use:
 + [build.sh](build.sh)
 + [run.sh](run.sh)
 + [stop.sh](stop.sh)
++ [clean.sh](clean.sh)
++ [remove.sh](remove.sh)
 
 ### **GPL License**
 
