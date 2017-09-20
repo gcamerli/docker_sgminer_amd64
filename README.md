@@ -10,7 +10,7 @@ This **Dockerfile** is related to this **docker** image:
 
 You must download and put inside the the same folder of the **Dockerfile** to build:
 
-+ [AMD APP SDK (Linux 64-bit)](http://develophttp://developer.amd.com/amd-accelerated-parallel-processing-app-sdk//)
++ [AMD APP SDK (Linux 64-bit)](http://developer.amd.com/amd-accelerated-parallel-processing-app-sdk/)
 
 ### **Shell scripts**
 
