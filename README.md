@@ -8,10 +8,9 @@ This **Dockerfile** is related to this **docker** image:
 
 ### **Requirements**
 
-You must download and put inside the source tree:
+You must download and put inside the the same folder of the **Dockerfile** to build:
 
 + [AMD APP SDK](http://developer.amd.com/amd-license-agreement-appsdk/)
-+ [AMD GPU PRO Driver](http://support.amd.com/en-us/kb-articles/Pages/AMDGPU-PRO-Driver-for-Linux-Release-Notes.aspx)
 
 ### **Shell scripts**
 
