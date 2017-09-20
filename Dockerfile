@@ -1,4 +1,4 @@
-FROM ubuntu:16.04
+FROM debian:stretch
 USER root
 
 LABEL maintainer="https://gcamer.li"
@@ -7,10 +7,14 @@ LABEL maintainer="https://gcamer.li"
 ENV TERM=xterm
 ENV DEBIAN_FRONTEND=noninteractive
 ENV RUNLEVEL=1
+RUN echo "deb http://deb.debian.org/debian stretch main contrib non-free" > /etc/apt/sources.list
+RUN echo "deb http://deb.debian.org/debian stretch-updates main contrib non-free" >> /etc/apt/sources.list
+RUN echo "deb http://security.debian.org stretch/updates main contrib non-free" >> /etc/apt/sources.list
 
 # Install build tools
-RUN apt-get update
-RUN apt-get install -y \
+RUN apt update
+RUN apt upgrade
+RUN apt install -y \
 	apt-utils \
 	xterm \
 	dialog \
@@ -28,7 +32,6 @@ RUN apt-get install -y \
 	gdebi \
 	unzip \
 	execstack \
-	dh-modaliases \
 	lib32gcc1 \
 	dkms \
 	yasm \
@@ -45,9 +48,11 @@ RUN apt-get install -y \
 	opencl-headers \
 	mesa-utils \
 	libglu1-mesa \
-	xserver-xorg-video-amdgpu \
 	libssl-dev \
-	libgmp-dev
+	libgmp-dev \
+	firmware-linux \
+	llvm-3.9 \
+	clang-3.9
 
 # Clean apt lists
 RUN rm -rf /var/lib/apt/lists/*
@@ -76,7 +81,7 @@ RUN chmod +x AMD-APP-SDK-*.sh
 RUN ./AMD-APP-SDK-*.sh -- --acceptEULA 'yes' -s
 
 # Remove AMD SDK installation files
-RUN rm AMD-APP-SDK-*.sh && rm -rf AMDAPPSDK-*
+RUN rm AMD-APP-SDK-*.sh
 
 # Remove AMD SDK samples
 RUN rm -rf /opt/AMDAPPSDK-*/samples/{aparapi,bolt,opencv}
@@ -84,19 +89,6 @@ RUN rm -rf /opt/AMDAPPSDK-*/samples/{aparapi,bolt,opencv}
 # Put includes and lib in the right path
 RUN ln -s /opt/AMDAPPSDK-3.0/include/CL /usr/include/CL && \ 
 	ln -s /opt/AMDAPPSDK-3.0/lib/x86_64/sdk/libOpenCL.so.1 /usr/lib/libOpenCL.so
-
-# Extract AMD GPU Pro
-COPY ./amdgpu-pro-17.30-*.tar.xz .
-RUN tar -xpvf amdgpu-pro-17.30-465504.tar.xz
-RUN rm amdgpu-pro-17.30-*.tar.xz
-
-# Install AMD GPU Pro
-WORKDIR /root/sgminer-gm/amdgpu-pro-17.30-465504/
-#RUN ./amdgpu-pro-install -y
-WORKDIR /root/sgminer-gm
-
-# Remove AMD GPU Pro files
-RUN rm -rf amdgpu-pro-17.30-* 
 
 # Set environment variables
 ENV PATH=$PATH:/root/sgminer-gm/
