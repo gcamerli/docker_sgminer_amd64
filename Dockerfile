@@ -53,6 +53,7 @@ RUN apt install -y \
 	xserver-xorg-video-radeon \
 	firmware-linux \
 	firmware-linux-nonfree \
+	firmware-amd-graphics \
 	llvm-3.9 \
 	clang-3.9
 
