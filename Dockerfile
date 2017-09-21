@@ -27,30 +27,32 @@ RUN apt install -y \
 	git \
 	screen \
 	libudev-dev \
-	xserver-xorg-core \
-	xserver-xorg-video-ati \
 	gdebi \
-	unzip \
 	execstack \
 	lib32gcc1 \
 	dkms \
 	yasm \
-	curl \
 	lsb-release \ 
+	curl \
 	libcurl4-openssl-dev \ 
 	pkg-config \
 	libncurses5-dev \
 	libevent-pthreads-2.0.5 \
 	libjansson-dev \
 	ocl-icd-opencl-dev \
-	libgl1-mesa-glx \
-	libgl1-mesa-dri \
 	opencl-headers \
 	mesa-utils \
 	libglu1-mesa \
+	libgl1-mesa-glx \
+	libgl1-mesa-dri \
 	libssl-dev \
 	libgmp-dev \
+	xserver-xorg-core \
+	xserver-xorg-video-amdgpu \
+	xserver-xorg-video-ati \
+	xserver-xorg-video-radeon \
 	firmware-linux \
+	firmware-linux-nonfree \
 	llvm-3.9 \
 	clang-3.9
 
@@ -98,8 +100,8 @@ ENV GPU_MAX_ALLOC_PERCENT=100
 
 # Build sgminer
 RUN autoreconf -i
-RUN CFLAGS="-02 -Wall -march=native"
-RUN ./configure
+RUN CFLAGS="-02 -Wall -march=native -std=gnu99 -I /opt/AMDAPPSDK-3.0/include/" LDFLAGS="-L/opt/AMDAPPSDK-3.0/lib/x86_64" 
+RUN ./configure --enable-opencl
 RUN make
 
 # Execute sgminer
