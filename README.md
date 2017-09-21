@@ -32,3 +32,10 @@ This scheme describes how the docker **container** is assembled to use **AMD GPU
 ### **GPL License**
 
 This work is licensed under the terms of **[GNU General Public License v3.0](https://www.gnu.org/licenses/gpl.html)**.
+
+### **Donations**
+
+Donations are accepted at:
+
++ BTC: 1DNWtR4wJbFE7vjcfQvuj4iE7FURYBURtr
++ CREA: CRgURSBHqM5FzQhy2iuGKPAHycTUwzr3Ei 
