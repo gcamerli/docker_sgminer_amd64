@@ -37,5 +37,5 @@ This work is licensed under the terms of **[GNU General Public License v3.0](htt
 
 Donations are accepted at:
 
-+ BTC: 1DNWtR4wJbFE7vjcfQvuj4iE7FURYBURtr
-+ CREA: CRgURSBHqM5FzQhy2iuGKPAHycTUwzr3Ei 
++ **BTC**: 1DNWtR4wJbFE7vjcfQvuj4iE7FURYBURtr
++ **CREA**: CRgURSBHqM5FzQhy2iuGKPAHycTUwzr3Ei
